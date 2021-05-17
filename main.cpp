@@ -3,7 +3,7 @@
 #include<ctime>
 #include "MineSweeper.h"
 using namespace std;
-int column, row, bomb,mode;
+int column, row, bomb, mode;
 int c, r;
 
 //檢查輸入值是否合理
@@ -20,22 +20,22 @@ bool checkMineRange(int column, int row, int bomb)
 		cout << "行數不合理，請重新輸入";
 		b = 0;
 	}
-	else if (bomb <= 0 || bomb > (row-1) * (column-1))
+	else if (bomb <= 0 || bomb > (row - 1) * (column - 1))
 	{
 		cout << "炸彈數量不合理，請重新輸入";
 		b = 0;
 	}
 	return b;
 }
-bool checkSelectRange(int c, int r,int mode,MineSweeper &m)
+bool checkSelectRange(int c, int r, int mode, MineSweeper &m)
 {
 	bool b = 1;
 	if (c >= column || c < 0)
 	{
 		cout << "列數不合理，請重新輸入";
-		b= 0;
+		b = 0;
 	}
-	else if (r >=row || r < 0)
+	else if (r >= row || r < 0)
 	{
 		cout << "行數不合理，請重新輸入";
 		b = 0;
@@ -58,53 +58,67 @@ void printText()
 	cout << "mode=2:標記該點位置" << endl;
 	cout << "請輸入列，行，mode:";
 }
+bool End() 
+{                                   
+	char command;
+	cout << "Do you want to play again?(y/n)";
+	cin >> command;
+	if (command == 'y' || command == 'Y') {
+		system("cls");
+		return true;
+	}
+	else if (command == 'n' || command == 'N')return false;
+	else std::cout << "Wrong command";
+}
 int main()
 {
-	
-
-	
-	cout<< "請輸入 列(8~20) 行(8~25) 炸彈數量(1~(列-1)*(行-1)):";
-
-	while (cin >> column >> row >> bomb &&!checkMineRange(column,row,bomb))
+	bool play = true;
+	while (play)
 	{
-		Sleep(1500);
-		system("cls");
 		cout << "請輸入 列(8~20) 行(8~25) 炸彈數量(1~(列-1)*(行-1)):";
-	}
-	MineSweeper m(column,row,bomb);
-	time_t t1=time(NULL);
-	m.printMineSweeper();
 
-	printText();
-	cin >> c>> r>>mode;
-	m.createMineSweeper(c-1, r-1);
-	printText();
-	while (cin >> c >> r>>mode)
-	{
-		if (!checkSelectRange(c-1, r-1, mode,m))
+		while (cin >> column >> row >> bomb && !checkMineRange(column, row, bomb))
 		{
 			Sleep(1500);
-			m.printMineSweeper();
-			printText();
-			continue;
+			system("cls");
+			cout << "請輸入 列(8~20) 行(8~25) 炸彈數量(1~(列-1)*(行-1)):";
 		}
-		if (m.isBomb(c- 1, r- 1) && mode == 1)
-			break;
-		if (mode == 1)
-			m.selectMode1(c- 1, r- 1);
-		else if(mode==2)
-			m.selectMode2(c- 1, r- 1);
+		MineSweeper m(column, row, bomb);
+		time_t t1 = time(NULL);
+		m.printMineSweeper();
 
-		
-		if (m.isWin())
-		{
-			cout << "win" << endl;;
-			cout << "使用時間為:" << time(NULL) - t1 << "秒";
-			return 0;
-		}
 		printText();
+		cin >> c >> r >> mode;
+		m.createMineSweeper(c - 1, r - 1);
+		printText();
+		while (cin >> c >> r >> mode)
+		{
+			if (!checkSelectRange(c - 1, r - 1, mode, m))
+			{
+				Sleep(1500);
+				m.printMineSweeper();
+				printText();
+				continue;
+			}
+			if (m.isBomb(c - 1, r - 1) && mode == 1)
+				break;
+			if (mode == 1)
+				m.selectMode1(c - 1, r - 1);
+			else if (mode == 2)
+				m.selectMode2(c - 1, r - 1);
+
+
+			if (m.isWin())
+			{
+				cout << "win" << endl;;
+				cout << "使用時間為:" << time(NULL) - t1 << "秒";
+				return 0;
+			}
+			printText();
+		}
+		m.selectBomb();
+		m.printMineSweeper();
+		cout << "lose" << endl;
+		play = End();
 	}
-	m.selectBomb();
-	m.printMineSweeper();
-	cout << "lose";
 }
