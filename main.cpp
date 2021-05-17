@@ -68,7 +68,7 @@ bool End()
 		return true;
 	}
 	else if (command == 'n' || command == 'N')return false;
-	else std::cout << "Wrong command";
+	else cout << "Wrong command";
 }
 int main()
 {
