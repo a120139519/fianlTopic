@@ -61,7 +61,7 @@ void printText()
 bool End() 
 {                                   
 	char a;
-	cout << "Do you want to play again?(y/n)";
+	cout << "要再玩一次嗎?(y/n)";
 	cin >> a;
 	if (a == 'y' || a == 'Y') 
 	{
@@ -69,10 +69,13 @@ bool End()
 		return true;
 	}
 	else if (a == 'n' || a == 'N')
+	{
+		cout << "Thanks for playing!";
 		return false;
+	}
 	else
 	{
-		cout << "Wrong command";
+		cout << "無效指令";
 		return false;
 	}
 }
