@@ -60,15 +60,21 @@ void printText()
 }
 bool End() 
 {                                   
-	char command;
+	char a;
 	cout << "Do you want to play again?(y/n)";
-	cin >> command;
-	if (command == 'y' || command == 'Y') {
+	cin >> a;
+	if (a == 'y' || a == 'Y') 
+	{
 		system("cls");
 		return true;
 	}
-	else if (command == 'n' || command == 'N')return false;
-	else cout << "Wrong command";
+	else if (a == 'n' || a == 'N')
+		return false;
+	else
+	{
+		cout << "Wrong command";
+		return false;
+	}
 }
 int main()
 {
@@ -107,11 +113,10 @@ int main()
 			else if (mode == 2)
 				m.selectMode2(c - 1, r - 1);
 
-
 			if (m.isWin())
 			{
 				cout << "win" << endl;;
-				cout << "使用時間為:" << time(NULL) - t1 << "秒";
+				cout << "使用時間為:" << time(NULL) - t1 << "秒" << endl;
 				return 0;
 			}
 			printText();
