@@ -27,7 +27,7 @@ bool checkMineRange(int column, int row, int bomb)
 	}
 	return b;
 }
-bool checkSelectRange(int c, int r, int mode, MineSweeper &m)
+bool checkSelectRange(int c, int r, int mode, MineSweeper& m)
 {
 	bool b = 1;
 	if (c >= column || c < 0)
@@ -58,12 +58,12 @@ void printText()
 	cout << "mode=2:標記該點位置" << endl;
 	cout << "請輸入列，行，mode:";
 }
-bool End() 
-{                                   
+bool End()
+{
 	char a;
 	cout << "要再玩一次嗎?(y/n)";
 	cin >> a;
-	if (a == 'y' || a == 'Y') 
+	if (a == 'y' || a == 'Y')
 	{
 		system("cls");
 		return true;
@@ -79,11 +79,28 @@ bool End()
 		return false;
 	}
 }
+
+
 int main()
 {
 	bool play = true;
+
+	cout << "			歡迎遊玩踩地雷				" << endl;
+	cout << "			請輸入1繼續				" << endl;
+	cout << "			若要退出					" << endl;
+	cout << "			請輸入0退出遊戲:";
+
+	int P;
+	cin >> P;
+
+	if (P == 0)
+	{
+		return 0;
+	}
+
 	while (play)
 	{
+
 		cout << "請輸入 列(8~20) 行(8~25) 炸彈數量(1~(列-1)*(行-1)):";
 
 		while (cin >> column >> row >> bomb && !checkMineRange(column, row, bomb))
