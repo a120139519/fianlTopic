@@ -85,10 +85,15 @@ int main()
 {
 	bool play = true;
 
-	cout << "			歡迎遊玩踩地雷				" << endl;
-	cout << "			請輸入1繼續				" << endl;
-	cout << "			若要退出					" << endl;
-	cout << "			請輸入0退出遊戲:";
+	cout << "	歡迎遊玩踩地雷				" << endl;
+	cout << "---------------------------------------" << endl;
+	cout << "	遊玩方法:先輸入大小			" << endl;
+	cout << "	接著輸入行列及炸彈數量		" << endl;
+	cout << "	接著輸入位置				" << endl;
+	cout << "---------------------------------------" << endl;
+	cout << "	請輸入1繼續				" << endl;
+	cout << "	若要退出					" << endl;
+	cout << "	請輸入0退出遊戲:";
 
 	int P;
 	cin >> P;
