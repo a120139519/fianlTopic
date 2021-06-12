@@ -61,7 +61,7 @@ void printText()
 bool End()
 {
 	char a;
-	cout << "要再玩一次嗎?(y/n)";
+	cout << "要再玩一次嗎?(Y/N)";
 	cin >> a;
 	if (a == 'y' || a == 'Y')
 	{
@@ -148,7 +148,7 @@ int main()
 		}
 		m.selectBomb();
 		m.printMineSweeper();
-		cout << "lose" << endl;
+		cout << "YOU LOSE!" << endl;
 		play = End();
 	}
 }
