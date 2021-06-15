@@ -12,7 +12,7 @@ MineSweeper::MineSweeper(int column, int row, int bomb)
 	{
 		mineSweeper[i] = new int[row];
 		select[i] = new bool[row];
-		mode2[i] = new bool [row];
+		mode2[i] = new bool[row];
 	}
 	for (int i = 0; i < column; i++) //mineSweeper歸零
 	{
@@ -38,37 +38,37 @@ MineSweeper::~MineSweeper()
 	delete[] mode2;
 }
 
-void MineSweeper::createMineSweeper(int c,int r)
+void MineSweeper::createMineSweeper(int c, int r)
 {
-	
-	createBomb(c,r);
+
+	createBomb(c, r);
 	for (int i = 0; i < column; i++)
 		for (int j = 0; j < row; j++)
-			mineSweeper[i][j]=checkBomb(i, j);
+			mineSweeper[i][j] = checkBomb(i, j);
 	setSelect(c, r);
 	if (getMineSweeperOfNum(c, r) == 0)
 	{
-		poi(c, r);
+		RecursionOpen(c, r);
 	}
-	
+
 
 	printMineSweeper();
 }
 
-void MineSweeper::createBomb(int c,int r)
+void MineSweeper::createBomb(int c, int r)
 {
 	srand(time(NULL));
 	int count = 0;
 	while (count <= numOfBomb)
 	{
-		for (int i = 0; i < column; i++) 
+		for (int i = 0; i < column; i++)
 		{
 			for (int j = 0; j < row; j++)
 			{
 
 				if ((rand() % (row * column / numOfBomb) == 0))
 				{
-					if ((i>=c-1&&i<=c+1)&&(j>=r-1&&j<=r+1))
+					if ((i >= c - 1 && i <= c + 1) && (j >= r - 1 && j <= r + 1))
 					{
 						continue;
 					}
@@ -78,7 +78,7 @@ void MineSweeper::createBomb(int c,int r)
 				if (count == numOfBomb)
 					return;
 			}
-		
+
 		}
 	}
 
@@ -95,7 +95,7 @@ void MineSweeper::printMineSweeper()
 			cout << "    ";
 			for (int k = 0; k < row; k++)
 			{
-				cout << setw(2)<<k + 1 << "  ";
+				cout << setw(2) << k + 1 << "  ";
 			}
 			cout << endl;
 		}
@@ -103,24 +103,24 @@ void MineSweeper::printMineSweeper()
 		{
 			if (j == 0)
 			{
-				cout << setw(2)<<i + 1 << "  ";
+				cout << setw(2) << i + 1 << "  ";
 			}
-			if (isMode2(i,j))
+			if (isMode2(i, j))
 			{
 				cout << setw(2) << "/" << "  ";
 				continue;
 			}
 			if (isSelect(i, j))
 			{
-				if (isBomb(i,j))
+				if (isBomb(i, j))
 					cout << setw(2) << "*" << "  ";
-				
+
 				else
 					cout << setw(2) << mineSweeper[i][j] << "  ";
 
 			}
 			else
-				cout <<setw(2)<<"-" << "  ";
+				cout << setw(2) << "-" << "  ";
 		}
 		cout << endl;
 	}
@@ -132,13 +132,14 @@ int MineSweeper::checkBomb(int c, int r)
 		return -1;
 	else
 	{
-		int tot=0;
-		for(int i=c-1;i<=c+1;i++)
+		int tot = 0;
+		for (int i = c - 1; i <= c + 1; i++)
 			for (int j = r - 1; j <= r + 1; j++)
 			{
-				if (i < 0 || j <0 ||i>=column||j>=row)
-				{ }
-				else if(mineSweeper[i][j] == -1)
+				if (i < 0 || j < 0 || i >= column || j >= row)
+				{
+				}
+				else if (mineSweeper[i][j] == -1)
 					tot++;
 			}
 		return tot;
@@ -162,22 +163,22 @@ void MineSweeper::setSelect(int i, int j)
 
 int MineSweeper::getMineSweeperOfNum(int i, int j)
 {
- 	return mineSweeper[i][j];
+	return mineSweeper[i][j];
 }
 
 bool MineSweeper::isWin()
 {
-	int tot=0;
-	for(int i=0;i<column;i++)
+	int tot = 0;
+	for (int i = 0; i < column; i++)
 		for (int j = 0; j < row; j++)
 			tot += select[i][j];
-	if(tot == row * column - numOfBomb)
+	if (tot == row * column - numOfBomb)
 		return 1;
 	else
 		return 0;
 }
 
-void MineSweeper::poi(int c, int r)
+void MineSweeper::RecursionOpen(int c, int r)
 {
 	if (getMineSweeperOfNum(c, r) != 0)
 	{
@@ -188,13 +189,14 @@ void MineSweeper::poi(int c, int r)
 	{
 		for (int j = r - 1; j <= r + 1; j++)
 		{
-			 
+
 			if (i < 0 || j < 0 || i >= column || j >= row || (i == c && j == r))
-			{}
-			else if(!isSelect(i, j))
+			{
+			}
+			else if (!isSelect(i, j))
 			{
 				setSelect(i, j);
-				poi(i, j);
+				RecursionOpen(i, j);
 			}
 		}
 	}
@@ -202,7 +204,7 @@ void MineSweeper::poi(int c, int r)
 
 void MineSweeper::selectBomb()
 {
-	for(int i=0;i<column;i++)
+	for (int i = 0; i < column; i++)
 		for (int j = 0; j < row; j++)
 		{
 			if (isBomb(i, j))
@@ -215,7 +217,7 @@ void MineSweeper::selectMode1(int c, int r)
 	setSelect(c, r);
 	if (getMineSweeperOfNum(c, r) == 0)
 	{
-		poi(c, r);
+		RecursionOpen(c, r);
 	}
 	printMineSweeper();
 }
@@ -228,7 +230,7 @@ void MineSweeper::selectMode2(int c, int r)
 
 bool MineSweeper::isMode2(int c, int r)
 {
-	
+
 	return mode2[c][r];
 }
 
